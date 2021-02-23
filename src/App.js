@@ -11,6 +11,9 @@ let markArr=[];
 let cntArr=[]
 function NaverMapAPI() {
   
+  const navermaps = window.naver.maps;
+
+  
   return (
     <div>
       <NaverMap
@@ -19,8 +22,10 @@ function NaverMapAPI() {
         width: '100%', // 네이버지도 가로 길이
         height: '85vh' // 네이버지도 세로 길이
       }}
+      
       defaultCenter={{ lat: 37.554722, lng: 126.970833 }} // 지도 초기 위치
       defaultZoom={13} // 지도 초기 확대 배율
+      
     >
       {cntArr.map((data,i)=>{
         return(
@@ -46,6 +51,7 @@ function NaverMapAPI() {
     </NaverMap>
     
     </div>
+    
     
   );
 }
@@ -83,6 +89,7 @@ const  App=()=> {
       error={<p>Maps Load Error</p>}
       loading={<p>Maps Loading...</p>}
     >
+    
       <NaverMapAPI />
     </RenderAfterNavermapsLoaded>
   );
