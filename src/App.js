@@ -11,16 +11,6 @@ let markArr=[];
 let cntArr=[]
 function NaverMapAPI() {
   
-  const navermaps = window.naver.maps;
-  const min = {x: 126.5322317, y: 33.3572421};
-  const max = {x: 126.5364907, y: 33.3608829};
-  const bounds = {
-    north: max.y,
-    east: max.x,
-    south: min.y,
-    west: min.x
-  };
-  
   return (
     <div>
       <NaverMap
@@ -29,10 +19,8 @@ function NaverMapAPI() {
         width: '100%', // 네이버지도 가로 길이
         height: '85vh' // 네이버지도 세로 길이
       }}
-      
       defaultCenter={{ lat: 37.554722, lng: 126.970833 }} // 지도 초기 위치
       defaultZoom={13} // 지도 초기 확대 배율
-      
     >
       {cntArr.map((data,i)=>{
         return(
@@ -59,7 +47,6 @@ function NaverMapAPI() {
     
     </div>
     
-    
   );
 }
 
@@ -71,9 +58,6 @@ const  App=()=> {
    
   })
   markArr=arr;
-
-  
-  
   jsonFile.forEach((d,j)=>{
     cntArr.push({count:0,latitude:0,longitude:0})
   })
@@ -99,7 +83,6 @@ const  App=()=> {
       error={<p>Maps Load Error</p>}
       loading={<p>Maps Loading...</p>}
     >
-    
       <NaverMapAPI />
     </RenderAfterNavermapsLoaded>
   );
