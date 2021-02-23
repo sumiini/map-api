@@ -8,6 +8,7 @@ import { RenderAfterNavermapsLoaded, NaverMap, Marker,Rectangle } from "react-na
   //MskYLQOWYg7kMTlwFD4oVJcmshWhhu5ehGfNq9s0
  // const NAVER_API_KEY = '6qwkueng4z';
 let markArr=[];
+let cntArr=[]
 function NaverMapAPI() {
   
   const navermaps = window.naver.maps;
@@ -28,17 +29,18 @@ function NaverMapAPI() {
         width: '100%', // 네이버지도 가로 길이
         height: '85vh' // 네이버지도 세로 길이
       }}
+      
       defaultCenter={{ lat: 37.554722, lng: 126.970833 }} // 지도 초기 위치
       defaultZoom={13} // 지도 초기 확대 배율
       
     >
-      {markArr.map((data,i)=>{
+      {cntArr.map((data,i)=>{
         return(
             <Marker
               key={i}
               position={new navermaps.LatLng(data.latitude, data.longitude)}
               animation={2}
-              onClick={() => {alert("여기는 ~ 입니다.");}}
+              onClick={() => {alert(`위도 : ${data.latitude} 경도 : ${data.longitude} 인원 : ${data.count} 명`);}}
             />
         )
       })}
@@ -65,30 +67,31 @@ const  App=()=> {
   const [jsonList,setJsonList] = useState([]);
   let arr=[];
   jsonFile.map((data,i)=>{
-    arr.push(ngeohash.decode(data.geohash))
-    //console.log(ngeohash.decode(data.geohash))
+    arr.push(ngeohash.decode(data.geohash.slice(0,4)))
+   
   })
   markArr=arr;
-  console.log(markArr)
-  // console.log(jsonFile.map((data,i)=>{
-  //   return(
-  //     data
-  //   )
-  // }))
-  
 
-  // var markerClustering = new MarkerClustering({
-  //   minClusterSize: 2,
-  //   maxZoom: 8,
-  //   map: map,
-  //   markers: markers,
-  //   disableClickZoom: false,
-  //   gridSize: 120,
-  //   indexGenerator: [10, 100, 200, 500, 1000],
-  //   stylingFunction: function(clusterMarker, count) {
-  //       $(clusterMarker.getElement()).find('map').text(count);
-  //   }
-  // });
+  
+  
+  jsonFile.forEach((d,j)=>{
+    cntArr.push({count:0,latitude:0,longitude:0})
+  })
+  jsonFile.forEach((e,i)=>{
+    
+    if(e.geohash.slice(0,4)===ngeohash.encode(markArr[i].latitude, markArr[i].longitude).slice(0,4)){
+      
+      markArr.forEach((data,j)=>{
+        if(ngeohash.encode(data.latitude,data.longitude).slice(0,4)===e.geohash.slice(0,4)){
+          cntArr[j].count++;
+          cntArr[j].latitude=data.latitude;
+          cntArr[j].longitude=data.longitude;
+          
+        }
+      })
+    }
+  })
+  console.log(cntArr)
   
   return (
     <RenderAfterNavermapsLoaded
