@@ -4,9 +4,6 @@ import axios from 'axios';
 import jsonFile from "./example.json";
 import ngeohash from 'ngeohash'
 import { RenderAfterNavermapsLoaded, NaverMap, Marker,Rectangle } from "react-naver-maps";
-// client id = 6qwkueng4z
-  //MskYLQOWYg7kMTlwFD4oVJcmshWhhu5ehGfNq9s0
- // const NAVER_API_KEY = '6qwkueng4z';
 let markArr=[];
 let cntArr=[]
 function NaverMapAPI() {
@@ -37,17 +34,6 @@ function NaverMapAPI() {
             />
         )
       })}
-
-    {/* <Rectangle 
-        bounds={bounds}
-        fillOpacity={0.5}
-        fillColor={'#FF0000'}
-        strokeColor={'red'}
-        clickable={true} // click event를 다루기 위해서는 true로 설정되어야함.
-        onClick={() => {
-          alert('여기는 한라산 입니다.')
-        }}
-      /> */}
     </NaverMap>
     
     </div>
@@ -85,7 +71,7 @@ const  App=()=> {
   
   return (
     <RenderAfterNavermapsLoaded
-      ncpClientId={'6qwkueng4z'} // 자신의 네이버 계정에서 발급받은 Client ID
+      ncpClientId={''} // 자신의 네이버 계정에서 발급받은 Client ID
       error={<p>Maps Load Error</p>}
       loading={<p>Maps Loading...</p>}
     >
